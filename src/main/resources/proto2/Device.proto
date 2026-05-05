@@ -1,0 +1,44 @@
+syntax = "proto2";
+
+option java_multiple_files = true;
+option java_package = 'com.example.proto2.device';
+
+package DeviceProtocol;
+
+enum DeviceType {
+  //  Has to be a unique name across all enums, cannot just use UNKNOWN.
+  DEVICE_TYPE_UNKNOWN = 0;
+  DASHLINK = 1;
+  FT1 = 2;
+  MICRONET = 3;
+  MGS = 4;
+  MITAC_ROAD_FACING = 5;
+  MITAC_DUAL_FACING = 6;
+  MITAC_SPRINT = 7;
+}
+
+message DeviceMetadata{
+  optional string hw_type = 1;
+  optional string hw_model = 2;
+}
+
+message Device {
+  optional string id = 1;
+  //  When not set explicitly, the getter will return 0 because it's a primitive type
+  optional int64  version = 2;
+  optional int64  created_at = 3;
+  optional int64  updated_at = 4;
+  optional int64  deleted_at = 5;
+
+  //  When not set explicitly, the getter will return 0, that's why the enum has to have a value for 0th element
+  optional DeviceType type = 10;
+  //  When not set explicitly, the getter will return an empty string (aka "") instead of null
+  optional string serial_number = 11;
+  optional string name = 12;
+  //  When not set explicitly, the getter will return false because it's a primitive type
+  optional bool enabled = 13;
+  //  When not set explicitly, the getter will return a default instance (aka an empty object) instead of null
+  optional DeviceMetadata device_metadata = 14;
+
+  reserved 6 to 9;
+}

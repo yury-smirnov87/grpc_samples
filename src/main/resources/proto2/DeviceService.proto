@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+option java_multiple_files = true;
+option java_package = 'com.example.proto2.device.service';
+
+package Api;
+
+import 'proto2/Device.proto';
+
+message GetDevicesRequest {
+  repeated string device_ids = 1;
+}
+
+message DeviceServiceResponse {
+  repeated DeviceProtocol.Device devices = 1;
+}
+
+service DeviceService {
+
+  rpc getDevices(GetDevicesRequest) returns (DeviceServiceResponse);
+
+}
